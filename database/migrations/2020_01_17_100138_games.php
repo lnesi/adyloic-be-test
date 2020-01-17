@@ -17,9 +17,9 @@ class Games extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('home_team_id');
-            $table->unsignedInteger('home_score');
+            $table->unsignedInteger('home_score')->default(0);
             $table->unsignedInteger('visit_team_id');
-            $table->unsignedInteger('visit_score');
+            $table->unsignedInteger('visit_score')->default(0);
             $table->timestamps();
             $table->foreign('home_team_id')->references('id')->on('teams');
             $table->foreign('visit_team_id')->references('id')->on('teams');

@@ -36,6 +36,11 @@ use Illuminate\Http\Request;
  *     name="game",
  *     description="Football Game Match",
  * )
+ *
+ * @OA\Tag(
+ *     name="transfer",
+ *     description="Transfer operations",
+ * )
  * */
 
 
@@ -63,6 +68,25 @@ $router->group(['prefix' => 'api/'], function () use ($router) {
      * )
      */
     $router->get('teams/{id}', 'TeamController@getById');
+
+    /**
+    * @OA\Get(
+    *     path="/api/teams/{teamid}/players",
+    *     tags={"team"},
+    *     description="Get all players of given team",
+    *     @OA\Parameter(
+    *         name="teamid",
+    *         in="path",
+    *         description="Id of Team",
+    *         required=true,
+    *         @OA\Schema(type="integer"),
+    *         explode=false
+    *     ),
+    *    @OA\Response(response=404, description="Not Found"),
+    *    @OA\Response(response=200, description="Team")
+    * )
+    */
+    $router->get('teams/{id}/players', 'TeamController@getPlayers');
 
 
     /**
@@ -166,7 +190,7 @@ $router->group(['prefix' => 'api/'], function () use ($router) {
     * @OA\Get(
     *     path="/api/players",
     *     tags={"player"},
-    *     description="Get Players list",
+    *     description="Get Player",
     *     @OA\Response(response="200", description="Player Array")
     * )
     */
@@ -255,4 +279,146 @@ $router->group(['prefix' => 'api/'], function () use ($router) {
     * )
     */
     $router->delete('players/{id}', 'PlayerController@delete');
+
+    /**
+     * @OA\Post(
+     *     path="/api/transfer",
+     *     tags={"transfer"},
+     *     operationId="makeTransfer",
+     *     description="Transfer player to team by ID",
+     *     @OA\Parameter(
+     *         name="playerid",
+     *         in="query",
+     *         description="Id of Player",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *         explode=false
+     *     ),
+     *     @OA\Parameter(
+     *         name="teamid",
+     *         in="query",
+     *         description="Id of Team",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *         explode=false
+     *     ),
+     *    @OA\Response(response=422, description="If team player count is larrger than 8. Only 8 players per team allowed"),
+     *    @OA\Response(response=404, description="Not Found"),
+     *    @OA\Response(response=200, description="Player")
+     * )
+     */
+    $router->post('transfer', 'TransferController@make');
+
+    /**
+     * @OA\Post(
+     *     path="/api/games",
+     *     tags={"game"},
+     *     operationId="createGame",
+     *     description="Create Game",
+     *     @OA\Parameter(
+     *         name="home_team_id",
+     *         in="query",
+     *         description="Id of Home Team",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *         explode=false
+     *     ),
+     *     @OA\Parameter(
+     *         name="visit_team)id",
+     *         in="query",
+     *         description="Id of Visitor Team",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *         explode=false
+     *     ),
+     *    @OA\Response(response=404, description="Not Found"),
+     *    @OA\Response(response=200, description="Player")
+     * )
+     */
+    $router->post('games', 'GameController@make');
+
+    /**
+    * @OA\Get(
+    *     path="/api/games",
+    *     tags={"game"},
+    *     description="Get All Games",
+    *     @OA\Response(response="200", description="Game Array")
+    * )
+    */
+    $router->get('games', 'GameController@getAll');
+
+    /**
+    * @OA\Get(
+    *     path="/api/games/{gameid}",
+    *     tags={"game"},
+    *     description="Get Team by ID",
+    *     @OA\Parameter(
+    *         name="gameid",
+    *         in="path",
+    *         description="Id of Game",
+    *         required=true,
+    *         @OA\Schema(type="integer"),
+    *         explode=false
+    *     ),
+    *    @OA\Response(response=404, description="Not Found"),
+    *    @OA\Response(response=200, description="Game")
+    * )
+    */
+    $router->get('games/{id}', 'GameController@getById');
+
+    /**
+    * @OA\Patch(
+    *     path="/api/games/{gameid}/update_score",
+    *     tags={"game"},
+    *     description="Update Game Score",
+    *     operationId="updateScore",
+    *     @OA\Parameter(
+    *         name="gameid",
+    *         in="path",
+    *         description="Id of Game",
+    *         required=true,
+    *         @OA\Schema(type="integer"),
+    *         explode=false
+    *     ),
+    *     @OA\Parameter(
+    *         name="home_score",
+    *         in="query",
+    *         description="Home Score",
+    *         required=true,
+    *         @OA\Schema(type="integer"),
+    *         explode=false
+    *     ),
+    *    @OA\Parameter(
+    *         name="visit_score",
+    *         in="query",
+    *         description="Visit Score",
+    *         required=true,
+    *         @OA\Schema(type="integer"),
+    *         explode=false
+    *     ),
+    *    @OA\Response(response=404, description="Not Found"),
+    *    @OA\Response(response=200, description="Game")
+    * )
+    */
+    $router->patch('games/{id}/update_score', 'GameController@updateScore');
+
+    /**
+    * @OA\Delete(
+    *     path="/api/games/{gameid}",
+    *     tags={"game"},
+    *     operationId="deleteGame",
+    *     description="Delete Game",
+    *     @OA\Parameter(
+    *         name="gameid",
+    *         in="path",
+    *         description="Id of Game",
+    *         required=true,
+    *         @OA\Schema(type="integer"),
+    *         explode=false
+    *     ),
+    *    @OA\Response(response=404, description="Not Found"),
+    *    @OA\Response(response=200, description="Ok")
+    * )
+    */
+    $router->delete('games/{id}', 'GameController@delete');
 });

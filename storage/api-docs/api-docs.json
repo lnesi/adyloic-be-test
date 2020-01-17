@@ -101,6 +101,34 @@
                 }
             }
         },
+        "/api/teams/{teamid}/players": {
+            "get": {
+                "tags": [
+                    "team"
+                ],
+                "description": "Get all players of given team",
+                "parameters": [
+                    {
+                        "name": "teamid",
+                        "in": "path",
+                        "description": "Id of Team",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "200": {
+                        "description": "Team"
+                    }
+                }
+            }
+        },
         "/api/teams": {
             "get": {
                 "tags": [
@@ -248,7 +276,7 @@
                 "tags": [
                     "player"
                 ],
-                "description": "Get Players list",
+                "description": "Get Player",
                 "responses": {
                     "200": {
                         "description": "Player Array"
@@ -292,6 +320,202 @@
                     }
                 }
             }
+        },
+        "/api/transfer": {
+            "post": {
+                "tags": [
+                    "transfer"
+                ],
+                "description": "Transfer player to team by ID",
+                "operationId": "makeTransfer",
+                "parameters": [
+                    {
+                        "name": "playerid",
+                        "in": "query",
+                        "description": "Id of Player",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "teamid",
+                        "in": "query",
+                        "description": "Id of Team",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "422": {
+                        "description": "If team player count is larrger than 8. Only 8 players per team allowed"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "200": {
+                        "description": "Player"
+                    }
+                }
+            }
+        },
+        "/api/games": {
+            "get": {
+                "tags": [
+                    "game"
+                ],
+                "description": "Get All Games",
+                "responses": {
+                    "200": {
+                        "description": "Game Array"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "game"
+                ],
+                "description": "Create Game",
+                "operationId": "createGame",
+                "parameters": [
+                    {
+                        "name": "home_team_id",
+                        "in": "query",
+                        "description": "Id of Home Team",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "visit_team)id",
+                        "in": "query",
+                        "description": "Id of Visitor Team",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "200": {
+                        "description": "Player"
+                    }
+                }
+            }
+        },
+        "/api/games/{gameid}": {
+            "get": {
+                "tags": [
+                    "game"
+                ],
+                "description": "Get Team by ID",
+                "parameters": [
+                    {
+                        "name": "gameid",
+                        "in": "path",
+                        "description": "Id of Game",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "200": {
+                        "description": "Game"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "game"
+                ],
+                "description": "Delete Game",
+                "operationId": "deleteGame",
+                "parameters": [
+                    {
+                        "name": "gameid",
+                        "in": "path",
+                        "description": "Id of Game",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        },
+        "/api/games/{gameid}/update_score": {
+            "patch": {
+                "tags": [
+                    "game"
+                ],
+                "description": "Update Game Score",
+                "operationId": "updateScore",
+                "parameters": [
+                    {
+                        "name": "gameid",
+                        "in": "path",
+                        "description": "Id of Game",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "home_score",
+                        "in": "query",
+                        "description": "Home Score",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "visit_score",
+                        "in": "query",
+                        "description": "Visit Score",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "200": {
+                        "description": "Game"
+                    }
+                }
+            }
         }
     },
     "tags": [
@@ -306,6 +530,10 @@
         {
             "name": "game",
             "description": "Football Game Match"
+        },
+        {
+            "name": "transfer",
+            "description": "Transfer operations"
         }
     ]
 }

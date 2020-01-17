@@ -10,12 +10,12 @@ The application should have API, that would be able to perform the following ope
 
 Register teams.
 
--   List teams.
--   Show Team by Id.
+-   List teams. OK
+-   Show Team by Id. OK
 -   Register players.
 -   Add a player to a team - player can be a member of only one team.
--   List players.
--   List players by id.
+-   List players. OK
+-   List players by id. OK
 -   List players by team id.
 -   Ability to move a player from one team to another.
 -   A team can have up to 8 players.
