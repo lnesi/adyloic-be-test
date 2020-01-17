@@ -31,7 +31,16 @@ class TeamController extends ApiController
         }
     }
 
-  
+
+    public function getPlayers($id)
+    {
+        $team=Team::find($id);
+        if ($team) {
+            return $team->players()->without(['team'])->get();
+        } else {
+            return $this->notFound();
+        }
+    }
 
     //
 }

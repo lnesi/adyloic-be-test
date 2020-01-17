@@ -12,7 +12,11 @@ class GameController extends ApiController
     protected $modelClass=\App\Game::class;
     public function make(Request $request)
     {
-        $this->validate($request, ['home_team_id' => 'required:numeric','visit_team_id:numeric' => 'required']);
+        $this->validate($request, [
+            'home_team_id' => 'required|numeric',
+            'visit_team_id' => 'required|numeric'
+            ]);
+
         $home_team=Team::find($request->get('home_team_id'));
         if (!$home_team) {
             return $this->error(404, 'Home Team Not found');
@@ -31,7 +35,10 @@ class GameController extends ApiController
 
     public function updateScore($id, Request $request)
     {
-        $this->validate($request, ['home_score' => 'required:numeric','visit_score' => 'required:numeric']);
+        $this->validate($request, [
+            'home_score' => 'required|numeric|min:0|max:100',
+            'visit_score' => 'required|numeric|min:0|max:100'
+            ]);
         $game=Game::find($id);
         if ($game) {
             $game->home_score=$request->get('home_score');

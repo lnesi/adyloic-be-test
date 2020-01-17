@@ -83,7 +83,7 @@ $router->group(['prefix' => 'api/'], function () use ($router) {
     *         explode=false
     *     ),
     *    @OA\Response(response=404, description="Not Found"),
-    *    @OA\Response(response=200, description="Team")
+    *    @OA\Response(response=200, description="Array Players")
     * )
     */
     $router->get('teams/{id}/players', 'TeamController@getPlayers');

@@ -10,7 +10,10 @@ class TransferController extends Controller
 {
     public function make(Request $request)
     {
-        $this->validate($request, ['teamid' => 'required:numeric','playerid' => 'required:numeric']);
+        $this->validate($request, [
+            'teamid' => 'required|numeric',
+            'playerid' => 'required|numeric'
+        ]);
         $team=Team::find($request->get('teamid'));
         if (!$team) {
             return $this->error(404, 'Team Not found');
