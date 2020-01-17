@@ -19,7 +19,7 @@ class ApiController extends Controller
         if ($item) {
             return $item;
         } else {
-            return response()->json(['error' => '404'], 404);
+            return $this->notFound();
         }
     }
 
@@ -31,10 +31,15 @@ class ApiController extends Controller
                 $item->delete();
                 return response()->json(['ok' => 200], 200);
             } else {
-                return response()->json(['error' => 404], 404);
+                return $this->notFound();
             }
         } else {
             return response()->json(['error' => 401,'message'=>'ID is required'], 401);
         }
+    }
+
+    protected function notFound()
+    {
+        return response()->json(['error' => 404,'message'=>'not found'], 404);
     }
 }

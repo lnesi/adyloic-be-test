@@ -32,7 +32,7 @@
                         "description": "Not Found"
                     },
                     "200": {
-                        "description": "Team Object"
+                        "description": "Team"
                     }
                 }
             },
@@ -41,6 +41,7 @@
                     "team"
                 ],
                 "description": "Delete Team",
+                "operationId": "deleteTeam",
                 "parameters": [
                     {
                         "name": "teamid",
@@ -59,6 +60,43 @@
                     },
                     "200": {
                         "description": "Ok"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "team"
+                ],
+                "description": "Update Team",
+                "operationId": "updateTeam",
+                "parameters": [
+                    {
+                        "name": "teamid",
+                        "in": "path",
+                        "description": "Id of Team",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Team Name",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "422": {
+                        "description": "Invalid input"
+                    },
+                    "200": {
+                        "description": "Team"
                     }
                 }
             }
@@ -80,7 +118,7 @@
                     "team"
                 ],
                 "description": "Create All Teams",
-                "operationId": "addTeam",
+                "operationId": "createTeam",
                 "parameters": [
                     {
                         "name": "name",
@@ -103,13 +141,28 @@
                 }
             }
         },
-        "/api/players/{id}": {
+        "/api/players/{playerid}": {
             "get": {
                 "tags": [
                     "player"
                 ],
-                "description": "Get Player by ID",
+                "description": "Get Team by ID",
+                "parameters": [
+                    {
+                        "name": "playerid",
+                        "in": "path",
+                        "description": "Id of Player",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
+                    "404": {
+                        "description": "Not Found"
+                    },
                     "200": {
                         "description": "Player"
                     }
@@ -119,10 +172,73 @@
                 "tags": [
                     "player"
                 ],
-                "description": "Delete Player by id",
+                "description": "Delete Player",
+                "operationId": "deletePlayer",
+                "parameters": [
+                    {
+                        "name": "playerid",
+                        "in": "path",
+                        "description": "Id of Player",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
+                    "404": {
+                        "description": "Not Found"
+                    },
                     "200": {
-                        "description": "ok"
+                        "description": "Ok"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "player"
+                ],
+                "description": "Update Player",
+                "operationId": "updatePlayer",
+                "parameters": [
+                    {
+                        "name": "playerid",
+                        "in": "path",
+                        "description": "Id of Player",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "first_name",
+                        "in": "query",
+                        "description": "First Name",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "last_name",
+                        "in": "query",
+                        "description": "Last Name",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "422": {
+                        "description": "Invalid input"
+                    },
+                    "200": {
+                        "description": "Team"
                     }
                 }
             }
@@ -144,9 +260,35 @@
                     "player"
                 ],
                 "description": "Create Player",
+                "operationId": "createPlayer",
+                "parameters": [
+                    {
+                        "name": "first_name",
+                        "in": "query",
+                        "description": "First Name",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "last_name",
+                        "in": "query",
+                        "description": "Last Name",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
+                    "422": {
+                        "description": "Invalid input"
+                    },
                     "200": {
-                        "description": "Player"
+                        "description": "Team"
                     }
                 }
             }
@@ -159,7 +301,7 @@
         },
         {
             "name": "player",
-            "description": "Player"
+            "description": "Football Player"
         },
         {
             "name": "game",
