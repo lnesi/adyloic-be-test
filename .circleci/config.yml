@@ -19,7 +19,6 @@ jobs:
       - run: composer install -n --prefer-dist
       - run: cp .env.testing .env
       - run: touch storage/database.sqlite
-      - run: php artisan key:generate
       - run: php artisan config:cache
       - run: php artisan migrate
       - save_cache: # special step to save the dependency cache with the `composer.lock` cache key template
