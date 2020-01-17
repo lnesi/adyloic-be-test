@@ -1,0 +1,46 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Adylic Test Api",
+        "description": "Adylic Test Sport Api",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/teams": {
+            "get": {
+                "description": "Get Teams",
+                "responses": {
+                    "default": {
+                        "description": "Get Team List"
+                    }
+                }
+            },
+            "post": {
+                "description": "Create Team",
+                "responses": {
+                    "default": {
+                        "description": "TeamObject"
+                    }
+                }
+            }
+        },
+        "/api/teams/{id}": {
+            "get": {
+                "description": "Get Team by ID",
+                "responses": {
+                    "default": {
+                        "description": "Team Object"
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete Team",
+                "responses": {
+                    "default": {
+                        "description": "TeamObject"
+                    }
+                }
+            }
+        }
+    }
+}

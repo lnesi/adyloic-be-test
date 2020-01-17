@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class ApiController extends Controller
+{
+    protected $modelClass;
+    public function getAll()
+    {
+        $items=$this->modelClass::all();
+        return $items;
+    }
+
+    public function getById(String $id)
+    {
+        $item=$this->modelClass::find($id);
+        if ($item) {
+            return $item;
+        } else {
+            return response()->json(['error' => '404'], 404);
+        }
+    }
+
+    public function delete($id)
+    {
+        if ($id) {
+            $item=$this->modelClass::find($id);
+            if ($item) {
+                $item->delete();
+                return response()->json(['ok' => 200], 200);
+            } else {
+                return response()->json(['error' => 404], 404);
+            }
+        } else {
+            return response()->json(['error' => 401,'message'=>'ID is required'], 401);
+        }
+    }
+}
