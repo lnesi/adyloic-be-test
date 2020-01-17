@@ -16,19 +16,61 @@ use Illuminate\Http\Request;
  * @OA\Info(
  *   version="1.0.0",
  *   title="Adylic Test Api",
- *   description="Adylic Test Sport Api"
+ *   description="Adylic Test Sport Api",
+ *   @OA\Contact(
+ *         email="luisenesi@gmail.com"
+ *     ),
+ * )
+ *
+ * @OA\Tag(
+ *     name="team",
+ *     description="Football Team",
+ * )
+ *
+ * @OA\Tag(
+ *     name="player",
+ *     description="Player",
+ * )
+ *
+ * @OA\Tag(
+ *     name="game",
+ *     description="Football Game Match",
  * )
  * */
+
+
 $router->get('/', function () use ($router) {
     return redirect('/api/documentation');
 });
 
 $router->group(['prefix' => 'api/'], function () use ($router) {
+
+    /**
+     * @OA\Get(
+     *     path="/api/teams/{teamid}",
+     *     tags={"team"},
+     *     description="Get Team by ID",
+     *     @OA\Parameter(
+     *         name="teamid",
+     *         in="path",
+     *         description="Id of Team",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *         explode=false
+     *     ),
+     *    @OA\Response(response=404, description="Not Found"),
+     *    @OA\Response(response=200, description="Team Object")
+     * )
+     */
+    $router->get('teams/{id}', 'TeamController@getById');
+
+
     /**
      * @OA\Get(
      *     path="/api/teams",
+     *     tags={"team"},
      *     description="Get Teams",
-     *     @OA\Response(response="default", description="Get Team List")
+     *     @OA\Response(response="200", description="Team Array")
      * )
      */
     $router->get('teams', 'TeamController@getAll');
@@ -36,37 +78,79 @@ $router->group(['prefix' => 'api/'], function () use ($router) {
     /**
     * @OA\Post(
     *     path="/api/teams",
-    *     description="Create Team",
-    *     @OA\Response(response="default", description="TeamObject")
+    *     tags={"team"},
+    *     operationId="addTeam",
+    *     description="Create All Teams",
+    *     @OA\Parameter(
+    *         name="name",
+    *         in="query",
+    *         description="Team Name",
+    *         required=true,
+    *         @OA\Schema(type="string"),
+    *         explode=false
+    *     ),
+    *     @OA\Response(response=422, description="Invalid input"),
+    *     @OA\Response(response=200, description="Team")
     * )
     */
     $router->post('teams', 'TeamController@create');
 
     /**
     * @OA\Delete(
-    *     path="/api/teams/{id}",
+    *     path="/api/teams/{teamid}",
+    *     tags={"team"},
     *     description="Delete Team",
-    *     @OA\Response(response="default", description="TeamObject")
+     *     @OA\Parameter(
+     *         name="teamid",
+     *         in="path",
+     *         description="Id of Team",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *         explode=false
+     *     ),
+     *    @OA\Response(response=404, description="Not Found"),
+     *    @OA\Response(response=200, description="Ok")
     * )
     */
     $router->delete('teams/{id}', 'TeamController@delete');
 
-
     /**
      * @OA\Get(
-     *     path="/api/teams/{id}",
-     *     description="Get Team by ID",
-     *     @OA\Response(response="default", description="Team Object")
+     *     path="/api/players/{id}",
+     *     tags={"player"},
+     *     description="Get Player by ID",
+     *     @OA\Response(response="200", description="Player")
      * )
      */
-    $router->get('teams/{id}', 'TeamController@getById');
+    $router->get('players/{id}', 'PlayerController@getById');
 
     /**
     * @OA\Get(
     *     path="/api/players",
+    *     tags={"player"},
     *     description="Get Players list",
-    *     @OA\Response(response="default", description="Get Player List")
+    *     @OA\Response(response="200", description="Player Array")
     * )
     */
     $router->get('players', 'PlayerController@getAll');
+    
+    /**
+    * @OA\Post(
+    *     path="/api/players",
+    *     tags={"player"},
+    *     description="Create Player",
+    *     @OA\Response(response="200", description="Player")
+    * )
+    */
+    $router->post('players', 'PlayerController@create');
+
+    /**
+    * @OA\Delete(
+    *     path="/api/players/{id}",
+    *     tags={"player"},
+    *     description="Delete Player by id",
+    *     @OA\Response(response="200", description="ok")
+    * )
+    */
+    $router->delete('players/{id}', 'PlayerController@delete');
 });

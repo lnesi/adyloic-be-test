@@ -13,7 +13,7 @@ class TeamController extends ApiController
     public function create(Request $request)
     {
         $this->validate($request, ['name' => 'required']);
-        $team=new Team($_POST);
+        $team=new Team($_REQUEST);
         $team->save();
         return $team;
     }

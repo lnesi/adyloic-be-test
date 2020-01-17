@@ -3,44 +3,167 @@
     "info": {
         "title": "Adylic Test Api",
         "description": "Adylic Test Sport Api",
+        "contact": {
+            "email": "luisenesi@gmail.com"
+        },
         "version": "1.0.0"
     },
     "paths": {
-        "/api/teams": {
+        "/api/teams/{teamid}": {
             "get": {
-                "description": "Get Teams",
-                "responses": {
-                    "default": {
-                        "description": "Get Team List"
-                    }
-                }
-            },
-            "post": {
-                "description": "Create Team",
-                "responses": {
-                    "default": {
-                        "description": "TeamObject"
-                    }
-                }
-            }
-        },
-        "/api/teams/{id}": {
-            "get": {
+                "tags": [
+                    "team"
+                ],
                 "description": "Get Team by ID",
+                "parameters": [
+                    {
+                        "name": "teamid",
+                        "in": "path",
+                        "description": "Id of Team",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
-                    "default": {
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "200": {
                         "description": "Team Object"
                     }
                 }
             },
             "delete": {
+                "tags": [
+                    "team"
+                ],
                 "description": "Delete Team",
+                "parameters": [
+                    {
+                        "name": "teamid",
+                        "in": "path",
+                        "description": "Id of Team",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
-                    "default": {
-                        "description": "TeamObject"
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        },
+        "/api/teams": {
+            "get": {
+                "tags": [
+                    "team"
+                ],
+                "description": "Get Teams",
+                "responses": {
+                    "200": {
+                        "description": "Team Array"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "team"
+                ],
+                "description": "Create All Teams",
+                "operationId": "addTeam",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Team Name",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "422": {
+                        "description": "Invalid input"
+                    },
+                    "200": {
+                        "description": "Team"
+                    }
+                }
+            }
+        },
+        "/api/players/{id}": {
+            "get": {
+                "tags": [
+                    "player"
+                ],
+                "description": "Get Player by ID",
+                "responses": {
+                    "200": {
+                        "description": "Player"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "player"
+                ],
+                "description": "Delete Player by id",
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    }
+                }
+            }
+        },
+        "/api/players": {
+            "get": {
+                "tags": [
+                    "player"
+                ],
+                "description": "Get Players list",
+                "responses": {
+                    "200": {
+                        "description": "Player Array"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "player"
+                ],
+                "description": "Create Player",
+                "responses": {
+                    "200": {
+                        "description": "Player"
                     }
                 }
             }
         }
-    }
+    },
+    "tags": [
+        {
+            "name": "team",
+            "description": "Football Team"
+        },
+        {
+            "name": "player",
+            "description": "Player"
+        },
+        {
+            "name": "game",
+            "description": "Football Game Match"
+        }
+    ]
 }

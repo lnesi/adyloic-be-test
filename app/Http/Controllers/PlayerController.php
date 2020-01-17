@@ -13,7 +13,7 @@ class PlayerController extends ApiController
     public function create(Request $request)
     {
         $this->validate($request, ['first_name' => 'required','last_name' => 'required']);
-        $player=new Player($_POST);
+        $player=new Player($_REQUEST);
         $player->save();
         return $player;
     }

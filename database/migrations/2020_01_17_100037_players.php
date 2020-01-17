@@ -18,7 +18,7 @@ class Players extends Migration
             $table->bigIncrements('id');
             $table->string('first_name');
             $table->string('last_name');
-            $table->unsignedInteger('team_id');
+            $table->unsignedInteger('team_id')->nullable();
             $table->timestamps();
             $table->foreign('team_id')->references('id')->on('teams');
             $table->index(['id', 'team_id']);
