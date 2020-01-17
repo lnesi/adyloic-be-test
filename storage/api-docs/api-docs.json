@@ -124,7 +124,7 @@
                         "description": "Not Found"
                     },
                     "200": {
-                        "description": "Team"
+                        "description": "Array Players"
                     }
                 }
             }

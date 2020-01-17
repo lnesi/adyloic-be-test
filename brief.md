@@ -12,12 +12,12 @@ Register teams.
 
 -   List teams. OK
 -   Show Team by Id. OK
--   Register players.
--   Add a player to a team - player can be a member of only one team.
+-   Register players. OK
+-   Add a player to a team - player can be a member of only one team. OK
 -   List players. OK
 -   List players by id. OK
--   List players by team id.
--   Ability to move a player from one team to another.
+-   List players by team id. OK
+-   Ability to move a player from one team to another. OK
 -   A team can have up to 8 players.
--   Register a game event.
--   Set team score per game (1 - 100).
+-   Register a game event. OK
+-   Set team score per game (1 - 100). OK
