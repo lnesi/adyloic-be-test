@@ -15,7 +15,7 @@ class Players extends Migration
     {
         //
         Schema::create('players', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('first_name');
             $table->string('last_name');
             $table->unsignedInteger('team_id')->nullable();

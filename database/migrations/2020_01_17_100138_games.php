@@ -15,7 +15,7 @@ class Games extends Migration
     {
         //
         Schema::create('games', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->unsignedInteger('home_team_id');
             $table->unsignedInteger('home_score')->default(0);
             $table->unsignedInteger('visit_team_id');
