@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b4d4634b8ff216b5bc2c55e0f253f705",
+    "content-hash": "da81edb81b51629d7f8171ff161020fb",
     "packages": [
         {
             "name": "darkaonline/swagger-lume",
@@ -5338,6 +5338,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
+        "ext-pdo_sqlite": "^7.2",
         "php": "^7.2"
     },
     "platform-dev": []
