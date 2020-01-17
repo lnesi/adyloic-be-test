@@ -44,7 +44,7 @@ jobs:
           keys:
             - composer-v2-{{ checksum "composer.json" }}
       - run: composer install -n --prefer-dist
-      - run: ./vendor/bin/phpunit
+      - run: ./vendor/bin/phpunit --testdox
 
 workflows:
   CI-Test:

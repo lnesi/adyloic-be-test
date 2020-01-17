@@ -3,43 +3,47 @@
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
 
-$test_buffer=null;
 class TeamTest extends TestCase
 {
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-
     public function testCreateTeam()
     {
-        global $test_buffer;
-        $this->post('/api/teams', ['name'=>'php unit team']);
+        $this->post('/api/teams', ['name'=>'phpunit team']);
         $response=json_decode($this->response->getContent());
-        $test_buffer=$response->id;
         $this->assertEquals(
-            "php unit team",
+            "phpunit team",
             $response->name
         );
+        \App\Team::destroy($response->id);
     }
 
     public function testGetTeam()
     {
-        global $test_buffer;
-        $this->get('/api/teams/'.$test_buffer);
+        $team=\App\Team::create(['name'=>'phpunit team']);
+        $this->get('/api/teams/'.$team->id);
         $response=json_decode($this->response->getContent());
-        $test_buffer=$response->id;
         $this->assertEquals(
-            "php unit team",
+            "phpunit team",
             $response->name
         );
+        $team->delete();
+    }
+
+    public function testUpdateTeam()
+    {
+        $team=\App\Team::create(['name'=>'phpunit team']);
+        $this->patch('/api/teams/'.$team->id, ['name'=>'phpunit team 2']);
+        $response=json_decode($this->response->getContent());
+        $this->assertEquals(
+            "phpunit team 2",
+            $response->name
+        );
+        $team->delete();
     }
 
     public function testDeleteTeam()
     {
-        global $test_buffer;
-        $this->delete('/api/teams/'.$test_buffer);
+        $team=\App\Team::create(['name'=>'phpunit team']);
+        $this->delete('/api/teams/'.$team->id);
         $response=json_decode($this->response->getContent());
         $this->assertEquals(
             "200",
